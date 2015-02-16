@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<project name="Test issue 748 PHPCI" basedir="." default="list">
+  <!-- Sets the DSTAMP, TSTAMP and TODAY properties -->
+  <tstamp/>
+  <!-- Load our configuration. The config.ini.dist, is only to allow installation tasks.
+            The hierarchy is:
+                - etc/local-config.ini
+                - etc/config.ini
+                - etc/config.ini.dist (the only one versioned)
+
+            If we send an argument by command line, it overrides the files
+                -->
+  <if>
+    <available file="etc/local-config.ini"/>
+    <then>
+      <property file="etc/local-config.ini" override="false"/>
+    </then>
+  </if>
+  <if>
+    <available file="etc/config.ini"/>
+    <then>
+      <property file="etc/config.ini" override="false"/>
+    </then>
+  </if>
+  <property file="etc/config.ini.dist" override="false"/>
+
+  <target name="list" description="List targets">
+    <exec command="phing -l" level="verbose" passthru="true"/>
+  </target>
+
+  <target name="build.ci" description="check the issue 748">
+    <if>
+      <equals arg1="${issue}" arg2="748"/>
+      <then>
+        <echo message="BUILD OK"/>
+      </then>
+      <else>
+        <fail message="BUILD FAIL"/>
+      </else>
+    </if>
+  </target>
+</project>

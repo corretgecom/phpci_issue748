@@ -1,0 +1,12 @@
+build_settings:
+  verbose: true
+  prefer_rsync: true
+  ignore:
+    - "var"
+    - ".git"
+
+test:
+  phing:
+    targets:
+      - "build.ci"
+
